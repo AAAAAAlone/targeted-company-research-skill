@@ -53,8 +53,8 @@ The skill starts with a keyword matrix, then searches and fetches evidence.
 
 Search routes:
 
-- OpenSEO skills/MCP for keyword research, SERP inspection, domain comparison and AI visibility.
-- DataForSEO MCP for Google/Bing/Yahoo SERP, keyword volume, CPC, Labs, OnPage and AI Optimization data.
+- OpenSEO skills/MCP for keyword research, SERP inspection, domain comparison and search-result quality checks.
+- DataForSEO MCP for Google/Bing/Yahoo SERP, keyword volume, CPC, Labs, OnPage and domain/search data.
 - General web search.
 - Authority-site search with `site:` and `filetype:pdf`.
 - Direct official site, exchange, registry, patent, certification, job and event searches.

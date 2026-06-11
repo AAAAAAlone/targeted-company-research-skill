@@ -107,8 +107,8 @@ site:patents.google.com "{company}"
 
 Use all available routes, but keep the source record clear:
 
-1. OpenSEO skills/MCP: keyword research, SERP inspection, domain comparison, AI visibility.
-2. DataForSEO MCP: Google/Bing/Yahoo SERP, keyword volume, CPC, Labs, OnPage, AI Optimization data.
+1. OpenSEO skills/MCP: keyword research, SERP inspection, domain comparison, search-result quality checks.
+2. DataForSEO MCP: Google/Bing/Yahoo SERP, keyword volume, CPC, Labs, OnPage, domain/search data.
 3. General web search: broad discovery.
 4. Authority-site search: `site:` and official databases.
 5. Direct site search: official website, jobs pages, IR pages, product catalog.

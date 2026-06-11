@@ -133,8 +133,8 @@ executives, subsidiaries, customers, suppliers, competitors, filings, and risk t
 
 Use the best available search/data routes:
 
-1. OpenSEO skills/MCP for keyword research, SERP inspection, domain comparison, and AI visibility.
-2. DataForSEO MCP for Google/Bing/Yahoo SERP, keyword volume, CPC, Labs, OnPage, and AI Optimization data.
+1. OpenSEO skills/MCP for keyword research, SERP inspection, domain comparison, and search-result quality checks.
+2. DataForSEO MCP for Google/Bing/Yahoo SERP, keyword volume, CPC, Labs, OnPage, and domain/search data.
 3. General web search for discovery.
 4. Authority-site searches with `site:` and `filetype:pdf`.
 5. User browser/CDP for logged-in, anti-bot, JS-rendered, or search-result pages where direct fetch fails.
