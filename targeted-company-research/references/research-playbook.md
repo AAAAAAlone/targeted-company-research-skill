@@ -2,121 +2,168 @@
 
 ## Research Thesis
 
-Targeted company research turns a named company into an evidence-backed business map: who the company is, what it sells, where it competes, who it sells to, how it reaches the market, and which public signals matter for ABM, partnership, competition, or diligence.
+Targeted company research turns a named company into an evidence-backed business map: what the
+company is, how it makes money, where it sits in its industry, who funds/supplies/buys from it, how
+it is hiring and communicating, and what a job seeker, investor, salesperson, partner, or competitor
+should infer from public evidence.
 
-## Keyword Expansion Matrix
+The final answer is not a company encyclopedia. It is a decision brief with an audit trail.
 
-Build this matrix before source collection. Update it after each discovery pass.
+## Phase 1: Identity Lock
 
-| Dimension | Query seeds |
-|---|---|
-| Entity | legal name, brand name, ticker, domain, old names, abbreviations, local-language names |
-| Organization | parent, subsidiaries, acquired brands, divisions, leadership names, founder names |
-| Product | category names, model names, SKU names, datasheet terms, certification terms |
-| Market | industry, buyer industry, use case, geography, channel, application |
-| Evidence | revenue, employees, funding, acquisition, lawsuit, patent, certification, catalog |
-| Channel | distributor, reseller, Amazon, Walmart, Alibaba, dealer, partner, service center |
-| ABM | CEO, president, VP sales, VP marketing, procurement, trade show, webinar, case study |
-| Source type | filetype:pdf, site:official-domain, registry, association, trade show, patent, SEC |
+Confirm the target before deep research:
 
-Use exact names first, then alias groups:
+- legal name, common name, brand names, English/Chinese aliases;
+- official website and official social/account pages;
+- HQ and operating locations;
+- parent/subsidiary/issuer relationships;
+- similar-name collision risks.
+
+Stop and clarify if two companies plausibly match the same name.
+
+Example identity-lock issue:
 
 ```text
-"{Company Legal Name}" revenue employees
-"{Brand}" OR "{Abbreviation}" products catalog filetype:pdf
-site:{official_domain} (about OR leadership OR news OR products OR catalog)
-"{Company}" (distributor OR reseller OR partner OR dealer)
-"{Company}" (patent OR certification OR UL OR ISO OR CE)
-"{Company}" (trade show OR exhibitor OR booth OR webinar)
-"{Company}" (acquisition OR funding OR lawsuit OR litigation)
-"{Company}" "{Product Category}" competitors
-"{Executive Name}" "{Company}"
+长鑫科技集团股份有限公司 may appear together with 长鑫存储 / CXMT / ChangXin Memory.
+Lock the issuer/legal entity, the operating brand, and the official domain before using financial,
+IPO, product, hiring, or media sources.
 ```
 
-## Search Phases
+## Phase 2: Project Setup
 
-### Phase 1: Identity Lock
-
-Confirm the target company identity before deep research:
-
-- Official domain and legal entity.
-- HQ city/country.
-- Parent/subsidiary relationships.
-- Main product category.
-- Similar-name collision risks.
-
-Stop and clarify with the user when two companies plausibly match the same target name.
-
-### Phase 2: Project Setup
-
-Create the project skeleton before research:
+Create the skeleton before research:
 
 ```text
 projects/{project_slug}/
 ├── task_plan.md
 ├── task_status.md
-├── task1_company/task_instructions.md
-├── task2_product/task_instructions.md
-├── task3_industry/task_instructions.md
-├── task4_channel/task_instructions.md
-├── task5_marketing/task_instructions.md
-├── sources/source_index.md
-└── evidence/
+├── keyword_matrix.md
+├── source_index.md
+├── data_gaps.md
+├── task1_identity_finance/task_instructions.md
+├── task2_product_technology/task_instructions.md
+├── task3_industry_competition/task_instructions.md
+├── task4_customers_suppliers/task_instructions.md
+├── task5_people_org_narrative/task_instructions.md
+├── sources/
+├── evidence/
+└── images/
 ```
 
-`task_plan.md` should record target company, official website, industry, geography, language, purpose, depth, run mode, task owners if any, and source targets.
-
-`task_status.md` should be updated after each task:
+`task_status.md` format:
 
 ```markdown
 | Task | Status | Sources | Fetch/browser | Major findings | Data gaps |
 |---|---|---:|---:|---|---|
-| Task 1 | done | 14 | 9 | ... | ... |
+| Task 1 | running | 0 | 0 | - | - |
 ```
 
-Use `running`, `done`, `blocked`, or `skipped` as status values.
+Status values: `pending`, `running`, `done`, `blocked`, `skipped`.
 
-### Phase 3: Breadth Search
+## Phase 3: Keyword Matrix
 
-Collect 20-40 candidate sources across all five task areas. Use search results to discover:
+Build `keyword_matrix.md` before source collection. Update it after each discovery pass.
 
-- Alternative names and subsidiaries.
-- Product models and certifications.
-- Competitors and distributors.
-- Executive names and public event references.
-- Market reports and association pages.
+| Dimension | Query seeds |
+|---|---|
+| Entity | legal name, brand, ticker, domain, old names, abbreviations, Chinese/English names |
+| Ownership | parent, subsidiaries, shareholder names, employee plans, investment funds, state capital |
+| Finance | revenue, profit, gross margin, assets, liabilities, capex, R&D, IPO, valuation, prospectus |
+| Product | product lines, model names, SKU names, process terms, datasheets, certifications, patents |
+| Market | industry, buyer industry, market size, share, cycle, policy, regulation, export controls |
+| Customers | customers, clients, case studies, application fields, qualification, supply chain entry |
+| Suppliers | equipment, materials, EDA/IP, packaging/testing, logistics, procurement, import/export |
+| People/org | founder, CEO, CFO, CTO, leadership, jobs, hiring, layoffs, compensation, culture |
+| Narrative/risk | litigation, sanctions, IP disputes, recalls, safety, controversy, media narratives |
+| Source type | `site:`, `filetype:pdf`, registry, exchange, association, trade show, patent, certification |
 
-Save candidate source metadata in `sources/source_index.md`:
+Use exact names first, then alias groups:
+
+```text
+"{Company Legal Name}" revenue profit gross margin
+"{Company Legal Name}" IPO prospectus filing
+"{Brand}" OR "{Abbreviation}" products catalog filetype:pdf
+site:{official_domain} (about OR leadership OR news OR products OR jobs)
+"{Company}" (customer OR supplier OR distributor OR partner)
+"{Company}" (patent OR certification OR ISO OR CE OR JEDEC)
+"{Company}" (lawsuit OR litigation OR sanctions OR export controls)
+"{Company}" (招聘 OR 薪酬 OR 面试 OR 校招 OR 社招)
+"{Executive Name}" "{Company}"
+```
+
+Authority-site examples:
+
+```text
+site:sse.com.cn {company} 招股说明书
+site:static.sse.com.cn {company} pdf
+site:cninfo.com.cn {company} 年报
+site:hkexnews.hk {company} annual report
+site:sec.gov {company} 10-K
+site:jobs.{domain} {company} engineer
+site:patents.google.com "{company}"
+```
+
+## Phase 4: Search Routes
+
+Use all available routes, but keep the source record clear:
+
+1. OpenSEO skills/MCP: keyword research, SERP inspection, domain comparison, AI visibility.
+2. DataForSEO MCP: Google/Bing/Yahoo SERP, keyword volume, CPC, Labs, OnPage, AI Optimization data.
+3. General web search: broad discovery.
+4. Authority-site search: `site:` and official databases.
+5. Direct site search: official website, jobs pages, IR pages, product catalog.
+6. Browser/CDP: JS-rendered, logged-in, anti-bot, marketplace, public profile, or search result pages.
+
+Search snippets only identify targets. Final facts require full source extraction, PDF text, browser
+capture, or user-provided evidence.
+
+## Phase 5: Breadth Search
+
+Collect 25-50 candidate sources across the five task areas before deep writing.
+
+Save candidate metadata in `source_index.md`:
 
 ```markdown
-| ID | Tier | Task | Source | URL | Date checked | Notes |
-|---|---|---|---|---|---|---|
-| S01 | T1 | Task 1 | Company website | https://... | YYYY-MM-DD | About page |
+| ID | Tier | Task | Title | Publisher | Date | URL/File | Extraction | Status | Confidence | Notes |
+|---|---|---|---|---|---|---|---|---|---|---|
+| S01 | T1 | Task 1 | Official about page | Company | YYYY-MM-DD | https://... | web_fetch | fetch_success | high | identity |
 ```
 
-### Phase 4: Deep Fetch
+## Phase 6: Deep Fetch
 
-Use `web_fetch` or equivalent extraction for stable pages:
+Use `web_fetch`, direct download, PDF extraction, OCR, browser, or CDP as appropriate.
 
-- Official about/product/news pages.
-- PDF catalogs, datasheets, annual reports, certificates.
-- Regulatory pages and public registries.
-- Association pages and trade show directories.
-- Credible third-party profiles and market data pages.
+Extraction methods:
 
-For each source, extract only facts relevant to the report. Avoid long pasted excerpts. Preserve exact numbers, dates, titles, product names, standards, and source names.
+```text
+search_tool | search_snippet_only | web_fetch | direct_download | pdf_text | ocr | headless_browser | cdp_browser | user_provided
+```
 
-### Phase 5: Browser/CDP Fetch
+Fetch status:
+
+```text
+fetch_success | fetch_partial | fetch_blocked | fetch_render_required | fetch_ocr_required | source_unavailable | source_conflict
+```
+
+For each source:
+
+- save raw or extracted material under `sources/` or `evidence/`;
+- preserve exact numbers, dates, titles, names, product names, standards, and short representative quotes;
+- record page/section for filings and PDFs when possible;
+- classify missing or blocked material in `data_gaps.md`.
+
+## Phase 7: Browser/CDP Fetch
 
 Use a CDP-connected browser when static extraction fails or when a page is JavaScript-heavy.
 
 Good targets:
 
-- Product listing pages with client-side rendering.
-- Marketplace product pages and review summaries.
-- Trade show exhibitor search pages.
-- LinkedIn-like company surfaces in a user-authorized session.
-- Certification lookup tools that require interactive search.
+- product listing pages with client-side rendering;
+- job pages and hiring portals;
+- trade show exhibitor search pages;
+- certification lookup tools;
+- public LinkedIn-like company/team surfaces in a user-authorized session;
+- marketplace pages, review summaries, and distributor locators.
 
 Evidence note format:
 
@@ -127,182 +174,173 @@ Evidence note format:
 - URL:
 - Page title:
 - Access date:
-- Tool: browser/CDP
+- Tool: headless_browser / cdp_browser
 - Extracted facts:
 - Screenshot path, if saved:
 - Confidence:
 ```
 
-Browser rules:
+Rules:
 
-- Use only public pages or user-authorized sessions.
+- Use public pages or user-authorized sessions only.
 - Do not bypass login, paywall, captcha, robots restrictions, or rate limits.
 - Do not scrape private personal data.
-- Prefer official company contact channels over individual emails.
+- Prefer DOM text over screenshots.
+- Feed discovered entities back into `keyword_matrix.md`.
 
-Implementation pattern:
+Avoid foreground focus stealing. Use headless, in-app browser, background tab, or dedicated CDP profile
+before touching the user's visible Chrome.
 
-1. Open the public target URL in the available browser tool, Chrome connector, or OpenClaw/CDP browser session.
-2. Wait for the required content to render: company cards, product grids, certification search results, marketplace reviews, event exhibitor rows, or public profile fields.
-3. Extract visible DOM text first: page title, canonical URL, section headings, table rows, product names, prices, ratings, dates, event names, person names and roles.
-4. Use screenshot evidence only when DOM extraction is not reliable.
-5. Record a short browser note with URL, title, access date, extracted facts, confidence, and screenshot path when used.
-6. Feed newly discovered entities back into the keyword matrix.
+## Phase 8: Task-Specific Search Packs
 
-Avoid foreground focus stealing when the environment provides a background browser or in-app browser. If only the user's visible Chrome is available, keep navigation minimal and preserve the current tab context where possible.
+### Task 1: Identity, Ownership, Finance, Governance
 
-### Phase 6: Expansion Loop
+Search:
 
-Run a second keyword pass using discovered names:
+- `{Company} legal entity headquarters`
+- `{Company} history founder CEO CFO CTO`
+- `{Company} shareholders ownership financing valuation`
+- `{Company} IPO prospectus registration statement`
+- `{Company} revenue profit gross margin assets liabilities capex`
+- `{Company} lawsuit litigation regulatory sanctions`
+- `site:{official_domain} about leadership history investors`
 
-- Product model names.
-- Subsidiaries and acquired brands.
-- Executives and event speakers.
-- Distributors and customer names.
-- Competitors and standards.
-- Industry-specific databases.
+Output:
 
-The second pass often finds better evidence than the original company-name searches.
+- identity lock and similar-name risks;
+- timeline and milestones;
+- ownership, shareholders, subsidiaries, related parties;
+- leadership and governance;
+- financial table with period, currency, source, page/section;
+- compliance, litigation, sanctions, ESG;
+- job/investment implication from fundamentals.
 
-### Phase 7: Sequential Merge
+### Task 2: Products, Technology, IP, Certifications
+
+Search:
+
+- `{Company} products catalog filetype:pdf`
+- `{Company} datasheet specifications`
+- `{Company} product model certification standard`
+- `{Company} patent technology R&D`
+- `site:{official_domain} products catalog support downloads`
+- `{Company} roadmap launch next generation`
+
+Output:
+
+- product taxonomy;
+- model/specification table;
+- patent/IP/standard evidence;
+- certifications and quality systems;
+- technology differentiation;
+- roadmap and data gaps.
+
+### Task 3: Industry, Competitors, Market Position, Policy
+
+Search:
+
+- `{Industry} market size CAGR forecast`
+- `{Industry} market share ranking competitors`
+- `{Company} market share ranking`
+- `{Industry} cycle price trend supply demand`
+- `{Industry} policy regulation export control`
+- `{Competitor} revenue product market share`
+
+Output:
+
+- value chain and profit pool;
+- market size/growth/cycle with source tiers;
+- competitor matrix;
+- market share or ranking with confidence;
+- policy/geopolitical risks;
+- strategic position.
+
+### Task 4: Customers, Suppliers, Channels, Ecosystem
+
+Search:
+
+- `{Company} customers clients case study`
+- `{Company} supplier equipment material partner`
+- `{Company} distributor reseller dealer`
+- `{Company} OEM ODM qualification`
+- `{Company} import export supplier customs`
+- `{Company} procurement sourcing supply chain`
+- `{Supplier/Customer} "{Company}"`
+
+Output:
+
+- confirmed customers and evidence strength;
+- supplier/ecosystem map;
+- channel and sales route;
+- procurement and qualification signals;
+- concentration or dependency risks;
+- partner/sales implications.
+
+### Task 5: People, Organization, Hiring, Narrative
+
+Search:
+
+- `{Company} jobs hiring career campus recruitment`
+- `{Company} salary interview culture layoff`
+- `{Company} CEO founder CTO CFO speech event`
+- `{Company} trade show exhibitor booth webinar`
+- `{Company} press release news 2024 2025 2026`
+- `{Company} media controversy risk`
+- `site:{official_domain} news jobs careers resources`
+
+Output:
+
+- hiring demand by function/location;
+- organization and leadership signals;
+- culture/employer reputation signals with T3 warning;
+- public events and media narrative;
+- purpose-specific implications for job seekers, investors, ABM, partner, or competitor view.
+
+## Phase 9: Expansion Loop
+
+After the first pass, rerun searches using discovered:
+
+- product names and technical terms;
+- subsidiaries and investment vehicles;
+- executives and event speakers;
+- customers, suppliers, distributors;
+- competitors and standards;
+- risk phrases from filings;
+- job families and locations.
+
+The second pass often finds better evidence than company-name searches.
+
+## Phase 10: Sequential Merge
 
 Codex should default to sequential merge:
 
 1. Read Task 1-5 outputs.
-2. Extract the strongest sourced findings into an executive synthesis.
+2. Extract the strongest sourced findings into executive takeaways.
 3. Preserve complete task outputs in `Appendix: Full Task Reports`.
-4. Remove duplicate source sections from the main task text only if the source index is complete.
-5. Deduplicate `sources/source_index.md` by canonical URL, but preserve different notes when one URL supports multiple facts.
-6. Write `FINAL_REPORT.md`.
+4. Deduplicate source rows by canonical URL/file, while preserving notes when one source supports multiple facts.
+5. Write `FINAL_REPORT.md`.
+6. Generate `report.html` and `report.pdf` for standard/deep reports or when requested.
 
-If any task is blocked, keep the task heading in the final report and write `缺少数据：...` rather than silently dropping it.
-
-## Source Tiers
-
-| Tier | Source examples | Use |
-|---|---|---|
-| T0 | SEC, Companies House, court records, customs, patent offices, certification databases | High-confidence facts |
-| T1 | Official website, official PDFs, investor pages, official social pages, press releases | Company claims and product facts |
-| T2 | Industry associations, trade shows, distributors, marketplaces, credible media | Market and channel evidence |
-| T3 | Lead databases, estimates, scraped company profiles, review aggregators | Estimates only |
-
-Label private-company revenue, employee count, traffic, and market share estimates with tier and confidence.
-
-## Task-Specific Search Packs
-
-### Task 1: Company Fundamentals
-
-Search for:
-
-- `{Company} revenue employees`
-- `{Company} legal entity headquarters`
-- `{Company} acquisition funding ownership`
-- `{Company} leadership team CEO CFO founder`
-- `{Company} lawsuit litigation recall regulatory`
-- `site:{domain} about history leadership`
-- `{Company} annual report SEC filing Companies House registry`
-
-Output facts:
-
-- Legal identity, HQ, history, ownership, leadership.
-- Revenue/employee range with confidence.
-- Locations, facilities, warehouses.
-- Regulatory, litigation, certification, ESG facts.
-
-### Task 2: Products And Technology
-
-Search for:
-
-- `{Company} products catalog filetype:pdf`
-- `{Company} datasheet specifications`
-- `{Company} product model certification`
-- `{Product Category} "{Company}" review rating`
-- `site:{domain} products catalog support downloads`
-- `{Company} patent technology R&D`
-
-Output facts:
-
-- Product line map.
-- Model/specification table.
-- Certifications and standards.
-- Pricing/review signals.
-- Technical differentiation and gaps.
-
-### Task 3: Industry And Competitors
-
-Search for:
-
-- `{Industry} market size CAGR forecast`
-- `{Industry} competitive landscape market share`
-- `{Company} competitors`
-- `{Competitor} revenue product market share`
-- `{Industry} trends 2024 2025 2026 regulation`
-- `{Industry} supply chain value chain`
-
-Output facts:
-
-- Market structure and growth.
-- Competitor matrix, at least five competitors for standard/deep research.
-- Positioning, opportunities, threats.
-- Clear distinction between market facts and strategic inference.
-
-### Task 4: Customers, Channels, Supply Chain
-
-Search for:
-
-- `{Company} customers clients case study`
-- `{Company} distributor reseller dealer partner`
-- `{Company} import export supplier customs`
-- `site:amazon.com "{Company}" "{Brand}"`
-- `site:walmart.com "{Company}" "{Brand}"`
-- `{Company} warehouse distribution center`
-- `{Company} procurement sourcing supply chain`
-
-Output facts:
-
-- Confirmed customers and evidence.
-- Channel map by region/type.
-- Marketplace presence, SKU/price/rating signals.
-- Sourcing and procurement signals.
-
-### Task 5: Marketing, Events, Public People, ABM
-
-Search for:
-
-- `{Company} trade show exhibitor booth`
-- `{Company} webinar case study white paper`
-- `{Company} LinkedIn leadership`
-- `{Company} CEO president VP sales VP marketing`
-- `{Company} press release news 2024 2025 2026`
-- `{Company} association member`
-- `site:{domain} news blog resources`
-
-Output facts:
-
-- Messaging and positioning.
-- Recent campaigns and content assets.
-- Trade shows/events.
-- Public business decision makers: name, role, company, public profile/event URL.
-- ABM entry angles with evidence, not private contact guesses.
+If a task is blocked, keep the task heading and write `缺少数据：...`.
 
 ## Final Report Rules
 
 Lead with conclusions:
 
-- Specific object.
-- Clear judgment.
-- Data or source evidence.
+- specific object;
+- clear judgment;
+- data or source evidence.
 
-Bad: `We researched the company from multiple angles.`
-
-Good: `{Company} is a privately held battery distributor with stronger channel evidence than technology differentiation; confirmed evidence includes {N} distributor pages, {N} product catalog pages, and {N} certification records.`
-
-Every table needs source marks. Every source mark must resolve to the source index.
-
-Missing evidence must be explicit:
+Bad:
 
 ```text
-缺少数据：未找到公开可验证的 2025 年营收；第三方估算仅能支持区间判断。
+We researched the company from multiple angles.
+```
+
+Good:
+
+```text
+{Company} has stronger verified product and hiring signals than customer disclosure; confirmed evidence includes {N} official product pages, {N} filing sections, and {N} job families, while public customer concentration remains a data gap.
 ```
 
 Final report structure:
@@ -312,34 +350,49 @@ Final report structure:
 
 ## Executive Takeaways
 
-## Part 1: Company Fundamentals And Products
-### 1. Company Fundamentals
-### 2. Products And Technology
+## 1. Identity, History, Ownership And Finance
 
-## Part 2: Market, Channel And ABM
-### 3. Industry And Competitors
-### 4. Customers, Channels And Supply Chain
-### 5. Marketing, Events And ABM Entry Points
+## 2. Products, Technology And IP
+
+## 3. Industry Position And Competitors
+
+## 4. Customers, Suppliers, Channels And Ecosystem
+
+## 5. People, Organization, Hiring And Public Narrative
+
+## Purpose-Specific Judgment
 
 ## Data Gaps
 
 ## Appendix: Full Task Reports
-### Task 1 Full Report
-### Task 2 Full Report
-### Task 3 Full Report
-### Task 4 Full Report
-### Task 5 Full Report
 
 ## Sources
 ```
 
+## HTML/PDF Rules
+
+`report.html` must include:
+
+- cover page;
+- table of contents;
+- clear H1/H2/H3 hierarchy;
+- readable financial, competitor, customer/supplier, and hiring tables;
+- local images from `images/`;
+- source appendix and data gaps.
+
+Export `report.pdf` from HTML and verify that the cover, tables, charts, and source appendix render.
+
 ## Quality Checklist
 
-- Official company identity locked.
+- Official identity locked.
 - All five task files exist for standard/deep reports.
-- Source index has no duplicate URLs unless the page supports different facts.
-- Source tier assigned for every source.
-- No private credentials, cookies, tokens, or personal contact guesses in output.
-- Browser/CDP observations are logged when used.
-- Inferences are labeled as inferences.
-- Final report preserves raw numbers, years, platform names, people names, product names, source names, and representative short quotes.
+- `keyword_matrix.md` exists and has a second expansion pass.
+- Source index has tier, extraction method, fetch status, and confidence.
+- No duplicate URLs unless notes differ materially.
+- Every important number has a source mark or `待核实`.
+- Financial data has period, currency, unit, basis, page/section when available.
+- T3 evidence is weak evidence only.
+- Browser/CDP observations are logged.
+- Inferences are labeled.
+- Missing evidence is explicit.
+- Final report preserves raw numbers, years, platform names, people names, product names, source names, and short representative quotes.
