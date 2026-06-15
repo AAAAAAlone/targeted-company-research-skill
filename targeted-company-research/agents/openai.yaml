@@ -1,6 +1,6 @@
 interface:
   display_name: "Targeted Company Research"
-  short_description: "Source-backed company deep dives for jobs, investment, ABM and diligence"
-  default_prompt: "Use $targeted-company-research to create a local source-backed company deep-dive report for a named target company, including keyword matrix, sources, data gaps, Markdown, HTML and PDF."
+  short_description: "有来源支撑的正式公司深度研究，适用于求职、投资、ABM、方案和尽调"
+  default_prompt: "Use $targeted-company-research 为指定公司创建本地正式深度研究报告。只有正式研究模式：120+ 关键词、100+ 搜索、70+ 候选来源、45+ fetch/浏览器访问、35+ 高质量来源、5 个研究任务、30+ 页 PDF。必须按四步执行：拓展关键词、搜索候选结果、fetch 或浏览器访问原始来源、基于来源标记和数据缺口结构化整理。核心结论必须用加粗标签或浅色高亮块形成层级。最终报告必须先写入 sections/ 并冻结章节，再按 merge_manifest.md 物理拼接 FINAL_REPORT.md；附录必须是证据型附录，补充正文未展开的表格、清单、竞品拆解、展会明细、供应链线索和待核实事项，不得重复正文摘要；完整来源表只放在底部。PDF 要有页眉页脚、当前章节和页码，不得有空白页，署名不得单独成页。交付文件命名为 公司名_jiascan_report_v1.0，后续递增 v1.1、v1.2。未达标时输出 INCOMPLETE_RESEARCH.md，不要生成短版 FINAL_REPORT.md 冒充正式报告。"
 policy:
   allow_implicit_invocation: true
